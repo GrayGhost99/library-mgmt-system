@@ -5,8 +5,12 @@ class User:
         self.name = name
         self.user_id = user_id
         self.borrowed_books = []
-        
-        
+    
+    
+    def __str__(self):
+        return f"{self.name} (ID: {self.user_id})"
+    
+    
     def borrow_book(self, book):
         if book.borrow_book():
             self.borrowed_books.append(book)
