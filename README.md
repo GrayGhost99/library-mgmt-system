@@ -1,6 +1,8 @@
 # library-mgmt-system
 
-## Project repo for practice building a library management system
+## Project repo for practice building a library management system.
+
+#### Library management system built with Python leveraging a Tkinter GUI and unittest tests.
 
 ## To execute:
 
