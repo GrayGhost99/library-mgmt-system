@@ -70,10 +70,10 @@ class LibraryGUI:
         self.book_listbox.pack()
 
         # List Users Button
-        self.remove_user_button = tk.Button(
+        self.list_user_button = tk.Button(
             root, text="List Users", command=self.update_user_list
         )
-        self.remove_user_button.pack()
+        self.list_user_button.pack()
 
         # Buttons for Managing Books
         self.borrow_book_button = tk.Button(
@@ -96,7 +96,7 @@ class LibraryGUI:
         )
         self.list_book_button.pack()
 
-        self.update_book_list()
+        self.list_available_books()
 
     def add_user(self):
         name = self.user_entry.get().strip()
@@ -141,7 +141,7 @@ class LibraryGUI:
             self.title_entry.delete(0, tk.END)
             self.author_entry.delete(0, tk.END)
             self.isbn_entry.delete(0, tk.END)
-            self.update_book_list()
+            self.list_available_books()
         else:
             messagebox.showwarning("Warning", "Please enter a title, author, and isbn.")
 
@@ -152,7 +152,7 @@ class LibraryGUI:
             self.library.remove_book(isbn)
             messagebox.showinfo("Success", f"(ID: {isbn}) removed!")
             self.isbn_entry.delete(0, tk.END)
-            self.update_book_list()
+            self.list_available_books()
         else:
             messagebox.showwarning("Warning", "Please enter ISBN number.")
 
@@ -167,29 +167,26 @@ class LibraryGUI:
             )
             if self.library.borrow_book(user, isbn):
                 messagebox.showinfo("Success", f"{user.name} borrowed {book_info}")
-                self.update_book_list()
+                self.list_available_books()
             else:
                 messagebox.showwarning("Warning", "Book not available")
 
     def return_book(self):
         selected_index = self.book_listbox.curselection()
-        if selected_index:
+        if selected_index and selected_index != "":
             book_info = self.book_listbox.get(selected_index[0])
             isbn = book_info.split("(ISBN: ")[1].split(")")[0]
             user_name = self.user_entry.get().strip()
 
             if self.library.return_book(user_name, isbn):
                 messagebox.showinfo("Success", f"{user_name} returned {book_info}")
-                self.update_book_list()
+                self.list_borrowed_books()
             else:
                 messagebox.showwarning(
                     "Error", f"Could not return book for {user_name}"
                 )
-
-    def update_book_list(self):
-        self.book_listbox.delete(0, tk.END)
-        for book in self.library.list_available_books():
-            self.book_listbox.insert(tk.END, book)
+        else:
+            messagebox.showwarning("Error", "Please select the book to be returned")
 
     def list_borrowed_books(self):
         self.book_listbox.delete(0, tk.END)
