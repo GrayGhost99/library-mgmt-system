@@ -4,10 +4,8 @@
 
 ## To execute:
 
-        cd to the library-mgmt-system directory
-        run: python main.py
+        python main.py # from library-mgmt-system directory
 
 ## To run tests:
 
-        cd to the library-mgmt-system directory
-        run: python -m unittest discover tests
+        python -m unittest discover tests # from library-mgmt-system directory
